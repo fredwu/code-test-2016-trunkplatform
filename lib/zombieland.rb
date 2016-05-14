@@ -1,5 +1,6 @@
 require 'pry'
 
+require 'zombieland/object'
 require 'zombieland/map/coordinate'
 require 'zombieland/map'
 require 'zombieland/cli/parser'
