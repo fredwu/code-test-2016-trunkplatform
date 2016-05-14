@@ -45,6 +45,30 @@ RSpec.describe Zombieland::Map do
     it { is_expected.to be_empty }
   end
 
+  describe '#zombies' do
+    subject { map.zombies }
+
+    before do
+      map.place(x: 1, y: 1, type: :zombie)
+      map.place(x: 1, y: 1, type: :zombie)
+    end
+
+    it { is_expected.to have(2).items }
+  end
+
+  describe '#unmoved_zombies' do
+    let!(:zombie) { map.place(x: 1, y: 1, type: :zombie) }
+
+    subject { map.unmoved_zombies }
+
+    before do
+      map.place(x: 1, y: 1, type: :zombie)
+      zombie.moved = true
+    end
+
+    it { is_expected.to have(1).item }
+  end
+
   describe '#place' do
     let(:coordinates) { { x: 2, y: 1 } }
 

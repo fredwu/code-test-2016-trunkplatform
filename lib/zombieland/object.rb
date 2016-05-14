@@ -1,12 +1,16 @@
 module Zombieland
   class Object
-    attr_accessor :x, :y, :type, :map
+    attr_accessor :x, :y, :type, :map, :moved
+
+    alias_method :moved?, :moved
 
     def initialize(x:, y:, type: nil, map:)
       @x    = x
       @y    = y
       @type = type
       @map  = map
+
+      @moved = false
     end
 
     def zombie?
@@ -54,6 +58,8 @@ module Zombieland
     end
 
     def movement_event
+      self.moved = true
+
       attack if zombie?
     end
 

@@ -30,6 +30,14 @@ module Zombieland
       objects.select { |o| o.x == x && o.y == y }
     end
 
+    def zombies
+      objects.select(&:zombie?)
+    end
+
+    def unmoved_zombies
+      zombies.reject(&:moved?)
+    end
+
     def place(x:, y:, type:)
       object = Object.new(x: x, y: y, type: type, map: self)
 

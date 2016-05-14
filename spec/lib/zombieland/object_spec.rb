@@ -12,6 +12,8 @@ RSpec.describe Zombieland::Object do
     )
   end
 
+  its(:moved?) { is_expected.to be(false) }
+
   context 'zombie' do
     before do
       subject.type = :zombie
@@ -60,36 +62,36 @@ RSpec.describe Zombieland::Object do
 
   describe '#move' do
     context 'valid movements' do
-      before do
-        expect(subject).to receive(:movement_event)
-      end
-
       describe 'DOWN' do
         before { subject.move('D') }
 
-        its(:x) { is_expected.to eq(1) }
-        its(:y) { is_expected.to eq(2) }
+        its(:x)      { is_expected.to eq(1) }
+        its(:y)      { is_expected.to eq(2) }
+        its(:moved?) { is_expected.to be(true) }
       end
 
       describe 'UP' do
         before { subject.move('U') }
 
-        its(:x) { is_expected.to eq(1) }
-        its(:y) { is_expected.to eq(0) }
+        its(:x)      { is_expected.to eq(1) }
+        its(:y)      { is_expected.to eq(0) }
+        its(:moved?) { is_expected.to be(true) }
       end
 
       describe 'LEFT' do
         before { subject.move('L') }
 
-        its(:x) { is_expected.to eq(0) }
-        its(:y) { is_expected.to eq(1) }
+        its(:x)      { is_expected.to eq(0) }
+        its(:y)      { is_expected.to eq(1) }
+        its(:moved?) { is_expected.to be(true) }
       end
 
       describe 'RIGHT' do
         before { subject.move('R') }
 
-        its(:x) { is_expected.to eq(2) }
-        its(:y) { is_expected.to eq(1) }
+        its(:x)      { is_expected.to eq(2) }
+        its(:y)      { is_expected.to eq(1) }
+        its(:moved?) { is_expected.to be(true) }
       end
     end
 
@@ -99,6 +101,8 @@ RSpec.describe Zombieland::Object do
       end
 
       it { expect { subject.move('INVALID') }.to raise_exception(Zombieland::Object::MovementException) }
+
+      its(:moved?) { is_expected.to be(false) }
     end
   end
 
