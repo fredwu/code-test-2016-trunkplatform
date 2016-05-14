@@ -7,6 +7,7 @@ module Zombieland
 
       def run
         Parser.run
+        Workflow.run(**options)
       end
     end
   end

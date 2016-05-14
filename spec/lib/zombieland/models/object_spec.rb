@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Zombieland::Object do
-  let(:map) { Zombieland::Map.new(dimensions: 4) }
+RSpec.describe Zombieland::Models::Object do
+  let(:map) { Zombieland::Models::Map.new(dimensions: 4) }
 
   subject do
     described_class.new(
@@ -128,7 +128,7 @@ RSpec.describe Zombieland::Object do
         expect(subject).to_not receive(:movement_event)
       end
 
-      it { expect { subject.move('INVALID') }.to raise_exception(Zombieland::Object::MovementException) }
+      it { expect { subject.move('INVALID') }.to raise_exception(Zombieland::Models::Object::MovementException) }
 
       its(:moved?) { is_expected.to be(false) }
     end

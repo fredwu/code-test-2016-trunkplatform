@@ -16,13 +16,56 @@ bundle install
 
 Example usage:
     -i, --input FILE                 Path to the zombie game input file
+    -t, --tunnelling_wall [NO]       Enable the tunnelling wall mode
 ```
+
+### Normal Mode
 
 ```bash
 ./bin/zombieland -i example-data/input.txt
 ```
 
+### Tunnelling Wall Mode
+
+```bash
+./bin/zombieland -i example-data/input.txt -t yes
+```
+
 ## Application Architecture
+
+        +----------------------------+
+        |             CLI            |
+        +--------------+-------------+
+                       |
+    +------------------v-----------------+
+    |              Workflow              |
+    +------------------------------------+
+    |   +----------------------------+   |
+    |   |         Transformer        |   | <- Transforms CSV input for consumption.
+    |   +--------------+-------------+   |
+    |                  |                 |
+    |   +--------------v-------------+   |
+    |   |            Game            |   | <- Runs the game logic.
+    |   +----------------------------+   |
+    |   |  +----------------------+  |   |
+    |   |  |        Models        |  |   | <- Domain models.
+    |   |  +----------------------+  |   |
+    |   |  |  +----------------+  |  |   |
+    |   |  |  |       Map      |  |  |   |
+    |   |  |  | +------------+ |  |  |   |
+    |   |  |  | | Coordinate | |  |  |   |
+    |   |  |  | +------------+ |  |  |   |
+    |   |  |  +----------------+  |  |   |
+    |   |  |  +----------------+  |  |   |
+    |   |  |  |     Object     |  |  |   | <- Zombie or creature.
+    |   |  |  +----------------+  |  |   |
+    |   |  +----------------------+  |   |
+    |   +--------------+-------------+   |
+    |                  |                 |
+    |   +--------------v-------------+   |
+    |   |          Presenter         |   | <- Presents the game output to CLI.
+    |   +----------------------------+   |
+    +------------------------------------+
 
 ## Test Suite
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Zombieland::Map do
+RSpec.describe Zombieland::Models::Map do
   subject(:map) { described_class.new(dimensions: 4) }
 
   its(:coordinate_constructs) { is_expected.to eq([0, 1, 2, 3]) }
@@ -11,7 +11,7 @@ RSpec.describe Zombieland::Map do
     describe 'first coordinate' do
       subject { map.coordinates.first }
 
-      it { is_expected.to be_kind_of(Zombieland::Map::Coordinate) }
+      it { is_expected.to be_kind_of(Zombieland::Models::Map::Coordinate) }
 
       its(:x)   { is_expected.to eq(0) }
       its(:y)   { is_expected.to eq(0) }
@@ -21,7 +21,7 @@ RSpec.describe Zombieland::Map do
     describe 'last coordinate' do
       subject { map.coordinates.last }
 
-      it { is_expected.to be_kind_of(Zombieland::Map::Coordinate) }
+      it { is_expected.to be_kind_of(Zombieland::Models::Map::Coordinate) }
 
       its(:x)   { is_expected.to eq(3) }
       its(:y)   { is_expected.to eq(3) }
@@ -32,7 +32,7 @@ RSpec.describe Zombieland::Map do
   describe '#coordinate' do
     subject { map.coordinate(x: 1, y: 1) }
 
-    it { is_expected.to be_kind_of(Zombieland::Map::Coordinate) }
+    it { is_expected.to be_kind_of(Zombieland::Models::Map::Coordinate) }
 
     its(:x)   { is_expected.to eq(1) }
     its(:y)   { is_expected.to eq(1) }
@@ -72,7 +72,7 @@ RSpec.describe Zombieland::Map do
   describe '#place' do
     let(:coordinates) { { x: 2, y: 1 } }
 
-    it { expect(map.place(**coordinates, type: :zombie)).to be_kind_of(Zombieland::Object) }
+    it { expect(map.place(**coordinates, type: :zombie)).to be_kind_of(Zombieland::Models::Object) }
 
     context 'a zomebie' do
       before do
