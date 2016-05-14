@@ -1,16 +1,18 @@
 module Zombieland
   class Object
-    attr_accessor :x, :y, :type, :map, :moved
+    attr_accessor :x, :y, :type, :tunnelling_wall, :map, :moved, :attacked_at
 
-    alias_method :moved?, :moved
+    alias moved? moved
+    alias tunnelling_wall? tunnelling_wall
 
-    def initialize(x:, y:, type: nil, map:)
-      @x    = x
-      @y    = y
-      @type = type
-      @map  = map
-
-      @moved = false
+    def initialize(x:, y:, type: nil, tunnelling_wall: false, map:)
+      @x               = x
+      @y               = y
+      @type            = type
+      @tunnelling_wall = tunnelling_wall
+      @map             = map
+      @moved           = false
+      @attacked_at     = Time.now
     end
 
     def zombie?
@@ -22,19 +24,23 @@ module Zombieland
     end
 
     def x=(new_x)
-      if map.coordinate_constructs.include?(new_x)
+      if valid_movement?(new_x)
         @x = new_x
-
-        movement_event
+      elsif tunnelling_wall?
+        @x = tunnel_coordinate(new_x)
       end
+
+      movement_event
     end
 
     def y=(new_y)
-      if map.coordinate_constructs.include?(new_y)
+      if valid_movement?(new_y)
         @y = new_y
-
-        movement_event
+      elsif tunnelling_wall?
+        @y = tunnel_coordinate(new_y)
       end
+
+      movement_event
     end
 
     def move(direction)
@@ -48,7 +54,8 @@ module Zombieland
     end
 
     def attacked!
-      self.type = :zombie
+      self.type        = :zombie
+      self.attacked_at = Time.now
     end
 
     private
@@ -65,6 +72,18 @@ module Zombieland
 
     def attack
       current_coordinate.creatures.each(&:attacked!)
+    end
+
+    def valid_movement?(coordinate)
+      map.coordinate_constructs.include?(coordinate)
+    end
+
+    def tunnel_coordinate(coordinate)
+      if coordinate < map.class::ORIGIN
+        map.dimensions + coordinate
+      else
+        coordinate - map.dimensions
+      end
     end
 
     class MovementException < ::Exception; end

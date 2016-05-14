@@ -38,8 +38,8 @@ module Zombieland
       zombies.reject(&:moved?)
     end
 
-    def place(x:, y:, type:)
-      object = Object.new(x: x, y: y, type: type, map: self)
+    def place(x:, y:, type:, tunnelling_wall: false)
+      object = Object.new(x: x, y: y, type: type, tunnelling_wall: tunnelling_wall, map: self)
 
       objects << object
 

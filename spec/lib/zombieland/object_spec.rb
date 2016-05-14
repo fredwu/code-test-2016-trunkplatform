@@ -39,24 +39,52 @@ RSpec.describe Zombieland::Object do
       expect(subject.y).to eq(2)
     end
 
-    it do
-      subject.x = -1
-      expect(subject.x).to eq(1)
+    context 'normal' do
+      it do
+        subject.x = -1
+        expect(subject.x).to eq(1)
+      end
+
+      it do
+        subject.x = 4
+        expect(subject.x).to eq(1)
+      end
+
+      it do
+        subject.y = -1
+        expect(subject.y).to eq(1)
+      end
+
+      it do
+        subject.y = 4
+        expect(subject.y).to eq(1)
+      end
     end
 
-    it do
-      subject.x = 8
-      expect(subject.x).to eq(1)
-    end
+    context 'tunnelling enabled' do
+      before do
+        subject.tunnelling_wall = true
+      end
 
-    it do
-      subject.y = -1
-      expect(subject.y).to eq(1)
-    end
+      it do
+        subject.x = -1
+        expect(subject.x).to eq(3)
+      end
 
-    it do
-      subject.y = 8
-      expect(subject.y).to eq(1)
+      it do
+        subject.x = 4
+        expect(subject.x).to eq(0)
+      end
+
+      it do
+        subject.y = -1
+        expect(subject.y).to eq(3)
+      end
+
+      it do
+        subject.y = 4
+        expect(subject.y).to eq(0)
+      end
     end
   end
 
@@ -117,13 +145,15 @@ RSpec.describe Zombieland::Object do
     describe 'creature 1' do
       subject { creature1 }
 
-      its(:zombie?) { is_expected.to be(true) }
+      its(:zombie?)     { is_expected.to be(true) }
+      its(:attacked_at) { is_expected.to be_within(0.01).of Time.now }
     end
 
     describe 'creature 2' do
       subject { creature2 }
 
-      its(:zombie?) { is_expected.to be(true) }
+      its(:zombie?)     { is_expected.to be(true) }
+      its(:attacked_at) { is_expected.to be_within(0.01).of Time.now }
     end
   end
 
