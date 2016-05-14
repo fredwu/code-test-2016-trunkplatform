@@ -3,6 +3,8 @@ require 'spec_helper'
 RSpec.describe Zombieland::Map do
   subject(:map) { described_class.new(dimensions: 4) }
 
+  its(:coordinate_constructs) { is_expected.to eq([0, 1, 2, 3]) }
+
   describe '4x4 map of coordinates' do
     its(:coordinates) { is_expected.to have(16).items }
 
@@ -45,6 +47,8 @@ RSpec.describe Zombieland::Map do
 
   describe '#place' do
     let(:coordinates) { { x: 2, y: 1 } }
+
+    it { expect(map.place(**coordinates, type: :zombie)).to be_kind_of(Zombieland::Object) }
 
     context 'a zomebie' do
       before do

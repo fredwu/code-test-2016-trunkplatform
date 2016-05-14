@@ -8,8 +8,12 @@ module Zombieland
       @dimensions = dimensions
     end
 
+    def coordinate_constructs
+      (ORIGIN...dimensions).to_a
+    end
+
     def coordinates
-      @coordinates ||= (ORIGIN...dimensions).to_a.repeated_permutation(2).to_a.map do |x, y|
+      @coordinates ||= coordinate_constructs.repeated_permutation(2).to_a.map do |x, y|
         Coordinate.new(x: x, y: y, map: self)
       end
     end
@@ -27,7 +31,11 @@ module Zombieland
     end
 
     def place(x:, y:, type:)
-      objects << Object.new(x: x, y: y, type: type)
+      object = Object.new(x: x, y: y, type: type, map: self)
+
+      objects << object
+
+      object
     end
   end
 end
