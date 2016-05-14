@@ -18,11 +18,19 @@ module Zombieland
     end
 
     def x=(new_x)
-      @x = new_x if map.coordinate_constructs.include?(new_x)
+      if map.coordinate_constructs.include?(new_x)
+        @x = new_x
+
+        movement_event
+      end
     end
 
     def y=(new_y)
-      @y = new_y if map.coordinate_constructs.include?(new_y)
+      if map.coordinate_constructs.include?(new_y)
+        @y = new_y
+
+        movement_event
+      end
     end
 
     def move(direction)
@@ -31,8 +39,26 @@ module Zombieland
       when 'U' then self.y -= 1
       when 'L' then self.x -= 1
       when 'R' then self.x += 1
-      else raise(MovementException.new('Unrecognised direction!'))
+      else raise MovementException, 'Unrecognised direction!'
       end
+    end
+
+    def attacked!
+      self.type = :zombie
+    end
+
+    private
+
+    def current_coordinate
+      map.coordinate(x: x, y: y)
+    end
+
+    def movement_event
+      attack if zombie?
+    end
+
+    def attack
+      current_coordinate.creatures.each(&:attacked!)
     end
 
     class MovementException < ::Exception; end

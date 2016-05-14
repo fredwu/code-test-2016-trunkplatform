@@ -9,12 +9,20 @@ module Zombieland
         @map = map
       end
 
-      def has_zombies?
-        objects.select(&:zombie?).any?
+      def zombies
+        objects.select(&:zombie?)
       end
 
-      def has_creatures?
-        objects.select(&:creature?).any?
+      def creatures
+        objects.select(&:creature?)
+      end
+
+      def zombies?
+        zombies.any?
+      end
+
+      def creatures?
+        creatures.any?
       end
 
       private

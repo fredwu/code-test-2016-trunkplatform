@@ -58,8 +58,8 @@ RSpec.describe Zombieland::Map do
       describe 'coordinate' do
         subject { map.coordinate(**coordinates) }
 
-        its(:has_zombies?)   { is_expected.to be(true) }
-        its(:has_creatures?) { is_expected.to be(false) }
+        its(:zombies?)   { is_expected.to be(true) }
+        its(:creatures?) { is_expected.to be(false) }
       end
 
       describe 'objects' do
@@ -84,8 +84,8 @@ RSpec.describe Zombieland::Map do
       describe 'coordinate' do
         subject { map.coordinate(**coordinates) }
 
-        its(:has_zombies?)   { is_expected.to be(true) }
-        its(:has_creatures?) { is_expected.to be(true) }
+        its(:zombies?)   { is_expected.to be(true) }
+        its(:creatures?) { is_expected.to be(true) }
       end
 
       describe 'objects' do
