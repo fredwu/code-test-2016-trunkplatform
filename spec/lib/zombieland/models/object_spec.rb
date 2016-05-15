@@ -125,7 +125,7 @@ RSpec.describe Zombieland::Models::Object do
 
     context 'invalid movement' do
       before do
-        expect(subject).to_not receive(:movement_event)
+        expect(subject).to_not receive(:post_movement_event)
       end
 
       it { expect { subject.move('INVALID') }.to raise_exception(Zombieland::Models::Object::MovementException) }

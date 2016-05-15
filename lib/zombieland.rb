@@ -1,6 +1,7 @@
 require 'csv'
 require 'pry'
 
+require 'zombieland/models/object/movement'
 require 'zombieland/models/object'
 require 'zombieland/models/map/coordinate'
 require 'zombieland/models/map'
