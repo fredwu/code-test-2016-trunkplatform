@@ -55,10 +55,6 @@ module Zombieland
 
       private
 
-      def current_coordinate
-        map.coordinate(x: x, y: y)
-      end
-
       def post_movement_event
         self.moved = true
 
@@ -66,7 +62,7 @@ module Zombieland
       end
 
       def attack
-        current_coordinate.creatures.each(&:attacked!)
+        map.coordinate(x: x, y: y).creatures.each(&:attacked!)
       end
     end
   end
